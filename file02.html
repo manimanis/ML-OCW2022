@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [
+          ["\\(","\\)"],
+          ['[mathjaxinline]','[/mathjaxinline]']
+        ],
+        displayMath: [
+          ["\\[","\\]"],
+          ['[mathjax]','[/mathjax]']
+        ]
+      }
+    });
+  </script>
+  <script type="text/javascript">
+    // Activating Mathjax accessibility files
+    window.MathJax = {
+      menuSettings: {
+        collapsible: true,
+        autocollapse: false,
+        explorer: true
+      }
+    };
+  </script>
+  <script id="MathJax-script" async src="assets/MathJax/es5/tex-chtml-full.js"></script>
+  <title>Document</title>
+</head>
+
+<body>
+  <main class="container">
+    <h1>Problem class</h1>
+    <p>There are many different problem classes in machine learning. They vary according to what kind of data is
+      provided and what kind of conclusions are to be drawn from it. Five standard problem classes are described below,
+      to establish some notation and terminology.</p>
+
+    <h2>Supervised learning</h2>
+    <p>
+      The idea of <em>supervised</em> learning is that the learning system is given inputs and told which specific
+      outputs should be associated with them. We divide up supervised learning based on whether the outputs are drawn
+      from a small finite set (classification) or a large finite or continuous set (regression). </p>
+
+    <h3>Classification</h3>
+
+    <p>Training data \( {\cal D}_ n \) is in the form of a set of pairs
+      \( \{ (x^{(1)}, y^{(1)}), \ldots , (x^{(n)}, y^{(n)})\} \) where \( x^{(i)} \) represents an object to
+      be classified, most typically a \( d \)-dimensional vector of real and/or discrete values, and \( y^{(i)} \) is an
+      element of a
+      discrete set of values. The \( y \) values are sometimes called <em>target values</em>.</p>
+    <p>
+      A classification problem is <em>binary</em> or <em>two-class</em> if \( y^{(i)} \) is drawn from a set of two
+      possible values; otherwise, it is called <em>multi-class</em>.</p>
+    <p>The goal in a classification problem is ultimately, given a new input value \( x^{(n+1)} \), to predict the value
+      of \( y^{(n+1)} \).</p>
+    <p>Classification problems are a kind of <em>supervised learning</em>, because the desired output (or class) \(
+      y^{(i)} \) is specified for each of the training examples \( x^{(i)} \).</p>
+
+    <h3>Regression</h3>
+    <p>Regression is like classification, except that \( y^{(i)} \in \mathbb {R}^ k \).</p>
+
+    <h2>Unsupervised learning</h2>
+
+    <p><em>Unsupervised</em> learning doesn't involve learning a function from inputs to outputs based on a set of
+      input-output pairs. Instead, one is given a data set and generally expected to find some patterns or structure
+      inherent in it. </p>
+
+    <h3>Density estimation</h3>
+    <p>Given samples \( x^{(1)}, \ldots , x^{(n)} \in \mathbb {R}^ D \) drawn IID from some distribution \( \Pr (X) \),
+      the goal is to predict the probability \( \Pr (x^{(n+1)}) \) of an element drawn from the same
+      distribution. Density estimation sometimes plays a role as a “subroutine" in the overall learning method for
+      supervised learning, as well.</p>
+
+    <h3>Clustering</h3>
+    <p>Given samples \( x^{(1)}, \ldots , x^{(n)} \in \mathbb {R}^ D\), the goal is
+      to find a partitioning (or “clustering") of the samples that groups together samples that are similar. There are
+      many different objectives, depending on the definition of the similarity between samples and exactly what
+      criterion is to be used (e.g., minimize the average distance between elements inside a cluster and maximize the
+      average distance between elements across clusters). Other methods perform a “soft" clustering, in which samples
+      may be assigned 0.9 membership in one cluster and 0.1 in another. Clustering is sometimes used as a step in
+      density estimation, and sometimes to find useful structure in data.
+    </p>
+
+    <h3>Dimensionality reduction</h3>
+    <p>Given samples \( x^{(1)}, \ldots , x^{(n)} \in \mathbb {R}^ D \), the problem
+      is to re-represent them as points in a \( d\)-dimensional space, where \( d &lt; D \). The goal is typically to
+      retain information in the data set that will, e.g., allow elements of one class to be discriminated from
+      another. </p>
+    <p>Dimensionality reduction is a standard technique which is particularly useful for visualizing or understanding
+      high-dimensional data. If the goal is ultimately to perform regression or classification on the data after the
+      dimensionality is reduced, it is usually best to articulate an objective for the overall prediction problem
+      rather than to first do dimensionality reduction without knowing which dimensions will be important for the
+      prediction task. </p>
+
+    <h4>Reinforcement learning</h4>
+    <p>In reinforcement learning, the goal is to learn a mapping from input values \( x \) to output values \( y \), but
+      without a direct supervision signal to specify which output values \( y \) are best for a particular input. There
+      is no training set specified <em>a priori</em>. Instead, the learning problem is framed as an agent interacting
+      with an environment, in the following setting:
+    </p>
+    <ul>
+      <li>The agent observes the current state, \( x^{(0)} \).</li>
+      <li>It selects an action, \( y^{(0)} \).</li>
+      <li>It receives a reward, \( r^{(0)} \), which depends on \( x^{(0)} \) and possibly \( y^{(0)} \).</li>
+      <li>The environment transitions probabilistically to a new state, \( x^{(1)} \), with a distribution that depends
+        only on \( x^{(0)} \) and \( y^{(0)} \).</li>
+      <li>The agent observes the current state, \( x^{(1)} \).</li>
+      <li>\( \ldots \)</li>
+    </ul>
+    <p>The goal is to find a policy \( \pi \), mapping \( x \) to \( y \), (that is, states to actions) such that some
+      long-term sum or average of rewards \( r \) is maximized.
+    </p>
+    <p>This setting is very different from either supervised learning or unsupervised learning, because the agent's
+      action choices affect both its reward and its ability to observe the environment. It requires careful
+      consideration of the long-term effects of actions, as well as all of the other issues that pertain to supervised
+      learning. </p>
+
+    <h3>Other settings</h3>
+    <p>There are many other problem settings. Here are a few.</p>
+    <p>In <em>semi-supervised</em> learning, we have a supervised-learning training set, but there may be an additional
+      set of \( x^{(i)} \) values with no known \( y^{(i)} \). These values can still be used to improve
+      learning performance if they are drawn from \( \Pr (X) \) that is the marginal of \( \Pr (X, Y) \) that governs
+      the rest of the data set.
+    </p>
+    <p>In <em>active</em> learning, it is assumed to be expensive to acquire a label \( y^{(i)} \) (imagine asking a
+      human to read an x-ray image), so the learning algorithm can sequentially ask for particular inputs \( x^{(i)} \)
+      to be labeled, and must carefully select queries in order to learn as effectively as possible while minimizing the
+      cost of labeling.</p>
+    <p>In <em>transfer</em> learning (also called <em>meta-learning</em>), there are multiple tasks, with data drawn
+      from different, but related, distributions. The goal is for experience with previous tasks to apply to learning a
+      current task in a way that requires decreased experience with the new task. </p>
+  </main>
+
+  <script src="assets/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

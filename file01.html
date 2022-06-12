@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+  <title>Document</title>
+</head>
+
+<body>
+  <main class="container">
+    <h1>Introduction to ML</h1>
+    <p>The main focus of machine learning is <i>making decisions</i> or <i>predictions</i> based on data.</p>
+    <p>There are a number of other fields with significant overlap in technique, but difference in focus: in economics
+      and psychology, the goal is to discover underlying causal processes and in statistics it is to find a model that
+      fits a data set well.</p>
+    <p>In those fields, the end product is a model. In machine learning, we often fit models, but as a mean to the end
+      of
+      making good predictions or decisions.</p>
+    <p>As machine-learning (ML) methods have improved in their capability and scope, ML has become the best way,
+      measured in terms of speed, human engineering time, and robustness, to make many applications. Great examples are
+      face detection and speech recognition and many kinds of language-processing tasks. Almost any application that
+      involves understanding data or signals that come from the real world can be best addressed using machine learning.
+    </p>
+    <p>One crucial aspect of machine learning approaches to solving problems is that human engineering plays an
+      important role. A human still has to frame the problem:</p>
+    <ul>
+      <li>acquire and organize data,</li>
+      <li>design a space of possible solutions,</li>
+      <li>select a learning algorithm and its parameters,</li>
+      <li>apply the algorithm to the data,</li>
+      <li>validate the resulting solution to decide whether it's good enough to use,</li>
+      <li>etc.</li>
+    </ul>
+    <p>The conceptual basis of learning from data is the problem of induction: <b>Why do we think that previously seen
+        data will help us predict the future?</b> This is a serious philosophical problem of long standing.</p>
+    <p>We will operationalize it by making assumptions, such as that all training data are IID (independent and
+      identically distributed) and that queries will be drawn from the same distribution as the training data, or that
+      the answer comes from a set of possible answers known in advance.</p>
+    <p>In general, we need to solve these two problems:</p>
+    <ul>
+      <li><b>estimation:</b> When we have data that are noisy reflections of some underlying quantity of interest, we
+        have to aggregate the data and make estimates or predictions about the quantity. How do we deal with the fact
+        that, for example, the same treatment may end up with different results on different trials? How can we predict
+        how well an estimate may compare to future results?</li>
+      <li><b>generalization:</b> How can we predict results of a situation or experiment that we have never encountered
+        before in our data set?</li>
+    </ul>
+    <p>We can describe problems and their solutions using six characteristics, three of which characterize the problem
+      and three of which characterize the solution:
+    </p>
+    <ol>
+      <li><b>Problem class:</b> What is the nature of the training data and what kinds of queries will be made at
+        testing time?</li>
+      <li><b>Assumptions:</b> What do we know about the source of the data or the form of the solution?</li>
+      <li><b>Evaluation criteria:</b> What is the goal of the prediction or estimation system? How will the answers to
+        individual queries be evaluated? How will the overall performance of the system be measured?</li>
+      <li><b>Model type:</b> Will an intermediate model be made? What aspects of the data will be modeled? How will the
+        model be used to make predictions?</li>
+      <li><b>Model class:</b> What particular parametric class of models will be used? What criterion will we use to
+        pick a particular model from the model class?</li>
+      <li><b>Algorithm:</b> What computational process will be used to fit the model to the data and/or to make
+        predictions?</li>
+    </ol>
+    <p>Without making some assumptions about the nature of the process generating the data, we cannot perform
+      generalization. In the following sections, we elaborate on these ideas.</p>
+  </main>
+
+  <script src="assets/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
