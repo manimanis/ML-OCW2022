@@ -1,0 +1,43 @@
+img {
+  max-width: 100%;
+}
+
+img.h-1 {
+  max-height: 1cm;
+}
+
+img.h-2 {
+  max-height: 2cm;
+}
+
+img.h-3 {
+  max-height: 3cm;
+}
+
+img.h-4 {
+  max-height: 4cm;
+}
+
+img.h-5 {
+  max-height: 5cm;
+}
+
+img.h-6 {
+  max-height: 6cm;
+}
+
+img.h-7 {
+  max-height: 7cm;
+}
+
+img.h-8 {
+  max-height: 8cm;
+}
+
+img.h-9 {
+  max-height: 9cm;
+}
+
+img.h-10 {
+  max-height: 10cm;
+}

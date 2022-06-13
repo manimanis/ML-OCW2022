@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [
+          ["\\(","\\)"],
+          ['[mathjaxinline]','[/mathjaxinline]']
+        ],
+        displayMath: [
+          ["\\[","\\]"],
+          ['[mathjax]','[/mathjax]']
+        ]
+      }
+    });
+  </script>
+  <script type="text/javascript">
+    // Activating Mathjax accessibility files
+    window.MathJax = {
+      menuSettings: {
+        collapsible: true,
+        autocollapse: false,
+        explorer: true
+      }
+    };
+  </script>
+  <script id="MathJax-script" async src="assets/MathJax/es5/tex-chtml-full.js"></script>
+  <title>Chapter 2 : Linear Classifiers</title>
+</head>
+
+<body>
+  <main class="container">
+    <h1>Classification</h1>
+    <p>A binary <em>classifier</em> is a mapping from \( \mathbb {R}^ d \rightarrow \{ -1, +1\} \). We'll often use the
+      letter \( h \) (for hypothesis) to stand for a classifier, so the classification process looks like: </p>
+    <p class="text-center">\( x \rightarrow \boxed {h} \rightarrow y \; \; \).</p>
+    <p>Real life rarely gives us vectors of real numbers; the \( x \) we really want to classify is usually something
+      like a song, image, or person. In that case, we'll have to define a function \( \varphi (x) \), whose domain is
+      \( \mathbb {R}^ d \), where \( \varphi \) represents <em>features</em> of \( x \), like a person's height or the
+      amount of bass in a song, and then let the \( h: \varphi (x) \rightarrow \{ -1, +1\} \). In much of the
+      following, we'll omit explicit mention of \( \varphi \) and assume that the \( x^{(i)} \) are in \( \mathbb {R}^ d
+      \), but you should always have in mind that some additional process was almost surely required to go from the
+      actual input examples to their feature representation. </p>
+    <p>In <em>supervised learning</em> we are given a training data set of the form </p>
+    <p class="text-center">\( {\cal D}_ n = \left\{ \left(x^{(1)}, y^{(1)}\right), \dots , \left(x^{(n)},
+      y^{(n)}\right)\right\} \; \; .\)</p>
+    <p>We will assume that each \( x^{(i)} \) is a \( d \times 1 \) <em>column vector</em>. The intended meaning
+      of this data is that, when given an input \( x^{(i)} \), the learned hypothesis should generate output
+      \( y^{(i)} \).</p>
+    <p>What makes a classifier useful? That it works well on <em>new</em> data; that is, that it makes good predictions
+      on examples it hasn't seen. But we don't know exactly what data this classifier might be tested on when we use it
+      in the real world. So, we have to <em>assume</em> a connection between the training data and testing data;
+      typically, they are drawn independently from the same probability distribution. </p>
+    <p>Given a training set \( {\cal D}_ n \) and a classifier \( h \), we can define the <em>training error</em> of \(
+      h \) to be
+    </p>
+    <p class="text-center">\( \displaystyle \mathcal{E}_ n(h) = \frac{1}{n}\sum _{i = 1}^{n}\begin{cases} 1 & h(x^{(i)})
+      \ne y^{(i)} \\ 0 & \text {otherwise}\end{cases} \; \; . \)</p>
+    <p>For now, we will try to find a classifier with small training error (later, with some added criteria) and hope it
+      <em>generalizes well</em> to new data, and has a small <em>test error</em>
+    </p>
+    <p class="text-center">\( \displaystyle \mathcal{E}(h) = \frac{1}{n'}\sum _{i = n + 1}^{n + n'}\begin{cases} 1 &
+      h(x^{(i)}) \ne y^{(i)} \\ 0 & \text {otherwise}\end{cases} \) </p>
+    <p>on \( n' \) new examples that were not used in the process of finding the classifier.</p>
+  </main>
+
+  <main class="container">
+    <h1>Learning algorithm</h1>
+    <p>A <em>hypothesis class</em> \( {\cal H} \) is a set (finite or infinite) of possible classifiers, each of which
+      represents a mapping from \( \mathbb {R}^ d \rightarrow \{ -1, +1\} \). </p>
+    <p>A <em>learning algorithm</em> is a procedure that takes a data set \( {\cal D}_ n \) as input and returns an
+      element \( h \) of \( {\cal H} \); it looks like</p>
+    <p class="text-center">\( {\cal D}_ n \longrightarrow \boxed {\text {learning alg (${\cal H}$)}} \longrightarrow h
+      \)</p>
+    <p>We will find that the choice of \( {\cal H} \) can have a big impact on the test error of the \( h \) that
+      results from this process. One way to get \( h \) that generalizes well is to restrict the size, or
+      “expressiveness" of \( {\cal H} \).</p>
+  </main>
+
+  <main class="container">
+    <h1>Linear classifiers</h1>
+    <p>We'll start with the hypothesis class of <em>linear classifiers</em>. They are (relatively) easy to understand,
+      simple in a mathematical sense, powerful on their own, and the basis for many other more sophisticated methods.
+    </p>
+    <p>A linear classifier in \( d \) dimensions is defined by a vector of parameters \( \theta \in \mathbb {R}^ d \)
+      and scalar \( \theta _0 \in \mathbb {R} \). So, the hypothesis class \( {\cal H} \) of linear classifiers in \( d
+      \) dimensions is the <em>set</em> of all vectors in \( \mathbb {R}^{d+1} \). We'll assume that \( \theta \) is an
+      \( d \times 1 \) column vector.
+    </p>
+    <p>Given particular values for \( \theta \) and \( \theta _0 \), the classifier is defined by</p>
+    <p class="text-center">\( \displaystyle h(x; \theta , \theta _0) = \text {sign}(\theta ^ T x + \theta _0) =
+      \begin{cases} +1 & \text {if
+      $\theta ^ Tx + \theta _0 > 0$} \\ -1 & \text {otherwise}\end{cases} \; \; . \)</p>
+    <p>Remember that we can think of \( \theta , \theta _0 \) as specifying a hyperplane. It divides
+      \( \mathbb {R}^ d \), the space our \( x^{(i)} \) points live in, into two half-spaces. The one
+      that is on the same side as the normal vector is the <em>positive</em> half-space, and we classify all points in
+      that space as positive. The half-space on the other side is <em>negative</em> and all points in it are classified
+      as negative.
+    </p>
+    <div style="border-radius:10px;padding:5px;border-style:solid;background-color:rgba(0,255,0,0.03);"
+      class="examplebox">
+      <p><b>Example:</b> Let \( h \) be the linear classifier defined by \( \theta = \begin{bmatrix} -1 \\ 1.5
+        \end{bmatrix}, \theta _0 = 3 \).</p>
+      <p>The diagram below shows several points classified by \( h \). In particular, let \( x^{(1)} = \begin{bmatrix} 3
+        \\ 2 \end{bmatrix} \) and \( x^{(2)} = \begin{bmatrix} 4 \\ -1 \end{bmatrix} \).</p>
+      <p class="text-center">\( \displaystyle h(x^{(1)}; \theta , \theta _0) = \text {sign}\left(\begin{bmatrix} -1 &
+        1.5 \end{bmatrix}\begin{bmatrix} 3 \\ 2 \end{bmatrix} + 3\right) = \text {sign}(3) = +1 \)
+      </p>
+      <p class="text-center">\( \displaystyle h(x^{(2)}; \theta , \theta _0) = \text {sign}\left(\begin{bmatrix} -1
+        & 1.5 \end{bmatrix}\begin{bmatrix} 4 \\ -1 \end{bmatrix} + 3\right) = \text {sign}(-2.5) = -1 \)</p>
+      <p>Thus, \( x^{(1)} \) and \( x^{(2)} \) are given positive and negative classfications, respectively. </p>
+      <figure><img src="images/chapitre02_01.png" class="h-8"></figure>
+    </div>
+
+    <p><b class="text-danger">Study Question:</b> <span style="color:#0000FF">What is green vector normal to the
+        hyperplane? Specify it as a column vector.</span></p>
+    <p><b class="text-danger">Study Question:</b> <span style="color:#0000FF"> What change would you have to make to
+        \( \theta , \theta _0 \) if you wanted to have the separating hyperplane in the same place, but to classify all
+        the points labeled '+' in the diagram as negative and all the points labeled '-' in the diagram as positive?
+      </span></p>
+  </main>
+
+  <main class="container">
+    <h1>Learning linear classifiers</h1>
+    <p>Now, given a data set and the hypothesis class of linear classifiers, our objective will be to find the linear
+      classifier with the smallest possible training error.</p>
+    <p><em>This is a well-formed optimization problem. But it's not computationally easy!</em></p>
+    <p>We'll start by considering a very simple learning algorithm. A good idea to think of the “stupidest possible"
+      solution to a problem, before trying to get clever. Here's a
+      fairly (but not completely) stupid algorithm. The idea is to generate \( k \) possible hypotheses by generating
+      their parameter vectors at random. Then, we can evaluate the training-set error on each of the hypotheses and
+      return the hypothesis that has the lowest training error (breaking ties arbitrarily).
+    </p>
+    <figure><img src="images/chapitre02_02.png" class="h-4"></figure>
+    <p>A note about notation.<br>This might be new notation: \( {\rm arg}\min _{x} f(x) \) means the value of \( x \)
+      for which \( f(x) \) is the smallest. Sometimes we write \( {\rm arg}\min _{x \in {\cal X}} f(x) \) when we want
+      to explicitly specify the set \( {\cal X} \) of values of \( x \) over which we want to minimize.</p>
+    <p><b class="text-danger">Study Question:</b> <span style="color:#0000FF"> What do you think happens to \(
+        \mathcal{E}_ n(h) \), where \( h \) is the hypothesis returned by Random-Linear-Classifier, as \( k \) is
+        increased?</span></p>
+    <p><b class="text-danger">Study Question:</b> <span style="color:#0000FF"> What properties of \( {\cal D}_ n \) do
+        you think will have an effect on \( \mathcal{E}_ n(h) \)? </span></p>
+  </main>
+
+  <main class="container">
+    <h1>Evaluating a learning algorithm</h1>
+
+    <p>How should we evaluate the performance of a <em>classifier</em> \( h \)? The best method is to measure <em>test
+        error</em> on data that was not used to train it. </p>
+    <p>How should we evaluate the performance of a <em>learning algorithm</em>? This is trickier. There are many
+      potential sources of variability in the possible result of computing test error on a learned hypothesis \( h \):
+    </p>
+    <ul>
+      <li>Which particular <em>training examples</em> occurred in \( {\cal D}_ n \)</li>
+      <li>Which particular <em>testing examples</em> occurred in \( {\cal D}_{n'} \)</li>
+      <li>Randomization inside the learning <em>algorithm</em> itself</li>
+    </ul>
+    <p>Generally, we would like to execute the following process multiple times: </p>
+    <ul>
+      <li>Train on a new training set</li>
+      <li>Evaluate resulting \( h \) on a testing set <em>that does not overlap the
+          training set</em></li>
+    </ul>
+    <p>Doing this multiple times controls for possible poor choices of training set or unfortunate randomization inside
+      the algorithm itself.</p>
+    <p>One concern is that we might need a lot of data to do this, and in many applications data is expensive or
+      difficult to acquire. We can re-use data with <em>cross validation</em> (but it's harder to do theoretical
+      analysis).</p>
+    <figure><img src="images/chapitre02_03.png" class="h-4"></figure>
+    <p>It's very important to understand that cross-validation neither delivers nor evaluates a single particular
+      hypothesis \( h \). It evaluates the <em>algorithm</em> that produces hypotheses.</p>
+  </main>
+
+
+  <script src="assets/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
